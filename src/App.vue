@@ -193,7 +193,7 @@ import Plan from './components/Plan.vue';
 import GoBackButton from './components/GoBackButton.vue';
 import AddOns from './components/AddOns.vue';
 
-const currentStep = ref(5);
+const currentStep = ref(1);
 
 function nextStep(){
 
