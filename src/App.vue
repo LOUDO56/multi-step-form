@@ -1,8 +1,17 @@
 <template>
 
   <div class="flex justify-center items-center w-screen h-screen overflow-hidden">
-    <div class="rounded-xl bg-white flex gap-10 p-4 m-3 absolute shadow-lg">
-      <div class="rounded-xl relative">
+    <div class="self-start block lg:hidden w-full relative">
+      <img src="/images/bg-sidebar-mobile.svg" alt="side bar mobile" class="absolute w-full lg:hidden block -z-10">
+      <div class=" flex flex-row justify-center items-center gap-5 my-7">
+        <Step :stepCount="1" description="your info" :isActive="currentStep === 1" />
+        <Step :stepCount="2" description="Select plan" :isActive="currentStep === 2" />
+        <Step :stepCount="3" description="Add-ons" :isActive="currentStep === 3" />
+        <Step :stepCount="4" description="Summary" :isActive="currentStep >= 4 " />
+      </div>
+    </div>
+    <div class="rounded-xl bg-white flex gap-10 p-4 m-3 absolute top-24 shadow-lg">
+      <div class="rounded-xl relative hidden lg:block">
         <img src="/images/bg-sidebar-desktop.svg" alt="side bar desktop" class="w-[18.9rem] lg:block hidden">
         <div class="absolute top-10 left-10 flex flex-col gap-7">
           <Step :stepCount="1" description="your info" :isActive="currentStep === 1" />
@@ -11,12 +20,11 @@
           <Step :stepCount="4" description="Summary" :isActive="currentStep >= 4 " />
         </div>
       </div>
-
       <!-- First Step -->
 
-      <div class="w-[42rem] px-20">
+      <div class="w-full lg:w-[42rem] px-5 lg:px-20">
         <div class="flex flex-col h-full" v-if="currentStep === 1">
-          <div class="mt-10">
+          <div class="mt-5 lg:mt-10">
             <StepDesc title="Personal info" subtitle="Please provide your name, email address, and phone number." />
             <div class="flex flex-col gap-3 mt-8">
               <Input 
@@ -46,14 +54,16 @@
             </div>
           </div>
           <div class="self-end mt-auto mb-5">
-            <Button @nextStep="nextStep">Next Step</Button>
+            <Button @nextStep="nextStep" :customStyle="'hidden lg:block'">Next Step</Button>
           </div>
         </div>
 
+        <!-- Second Step -->
+
         <div class="flex flex-col h-full" v-else-if="currentStep === 2">
-          <div class="mt-10">
+          <div class="mt-5 lg:mt-10">
             <StepDesc title="Select your plan" subtitle="You have the option of monthly or yearly earning billing." />
-            <div class="flex gap-5 mt-8 min-h-48">
+            <div class="flex flex-col lg:flex-row gap-3 lg:gap-5 mt-8 min-h-48">
               <Plan 
                 :iconLink="'/images/icon-arcade.svg'"
                 :name="'Arcade'"
@@ -94,13 +104,15 @@
             </div>
           </div>
           <div class="flex justify-between mt-auto mb-5">
-            <GoBackButton @previousStep="previousStep" />
-            <Button @nextStep="nextStep">Next Step</Button>
+            <GoBackButton @previousStep="previousStep" :customStyle="'hidden lg:block'" />
+            <Button @nextStep="nextStep" :customStyle="'hidden lg:block'">Next Step</Button>
           </div>
         </div>
+
+        <!-- Third Step -->
         
         <div class="flex flex-col h-full" v-else-if="currentStep === 3">
-          <div class="mt-10">
+          <div class="mt-5 lg:mt-10">
             <StepDesc title="Pick Add-ons" subtitle="Add-ons help enhance your gaming experience." />
             <div class="flex flex-col gap-5 mt-8">
               <AddOns 
@@ -133,13 +145,15 @@
             </div>
           </div>
           <div class="flex justify-between mt-auto mb-5">
-            <GoBackButton @previousStep="previousStep" />
-            <Button @nextStep="nextStep">Next Step</Button>
-          </div>
+            <GoBackButton @previousStep="previousStep" :customStyle="'hidden lg:block'" />
+            <Button @nextStep="nextStep" :customStyle="'hidden lg:block'">Next Step</Button>
+          </div>  
         </div>
 
+        <!-- Last Step -->
+
         <div class="flex flex-col h-full" v-else-if="currentStep === 4">
-          <div class="mt-10">
+          <div class="mt-5 lg:mt-10">
             <StepDesc title="Finishing up" subtitle="Double check everything looks OK before confirming." />
             <div class="px-7 py-5 bg-magnolia rounded-xl mt-8">
               <div class="flex justify-between items-center">
@@ -166,18 +180,30 @@
               </div>
             </div>
           </div>
-          <div class="mt-5 flex justify-between items-center">
+          <div class="mt-5 flex justify-between items-center px-5 lg:px-0">
             <span class="text-cool-gray">Total {{ billing === 'monthly' ? '(per month)' : '(per year)' }}</span>
             <span class="text-purplish-blue font-bold text-xl">+${{ billing === 'monthly' ? totalPrice + '/mo' : totalPrice + '/yr' }}</span>
           </div>
           <div class="flex justify-between mt-auto mb-5">
-            <GoBackButton @previousStep="previousStep" />
-            <Button @nextStep="nextStep" :customColor="'bg-purplish-blue'" :customHover="'hover:opacity-80'">Confirm</Button>
+            <GoBackButton @previousStep="previousStep" :customStyle="'hidden lg:block'" />
+            <Button @nextStep="nextStep" :customStyle="'hidden lg:block'" :customColor="'bg-purplish-blue'" :customHover="'hover:opacity-80'">Confirm</Button>
           </div>
         </div>
-        <div class="h-full flex flex-col justify-center gap-7 text-center items-center" v-else-if="currentStep === 5">
+
+        <!-- Ended -->
+
+        <div class="h-full flex flex-col justify-center gap-7 text-center items-center lg:py-0 py-24" v-else-if="currentStep === 5">
           <img src="/images/icon-thank-you.svg" alt="Thank you icon">
           <StepDesc title="Thank you!" subtitle="Thanks for confirming your subscription! We hope you have fun using our platform. If you ever need support, please feel free to email us at support@loremgaming.fr." /> 
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-0 w-full bg-white py-3 px-4 block lg:hidden" v-if="currentStep < 5">
+      <div class="flex justify-between items-center">
+        <GoBackButton @previousStep="previousStep" v-if="currentStep > 1" />
+        <div class="ml-auto">
+          <Button @nextStep="nextStep" v-if="currentStep < 4">Next Step</Button>
+          <Button @nextStep="nextStep" v-else :customColor="'bg-purplish-blue'" :customHover="'hover:opacity-80'">Confirm</Button>
         </div>
       </div>
     </div>
@@ -198,7 +224,7 @@ import Plan from './components/Plan.vue';
 import GoBackButton from './components/GoBackButton.vue';
 import AddOns from './components/AddOns.vue';
 
-const currentStep = ref(2);
+const currentStep = ref(1);
 const currency = '$';
 
 const montlyOrYearly = (price) => {
