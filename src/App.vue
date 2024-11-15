@@ -65,7 +65,7 @@
             <StepDesc title="Select your plan" subtitle="You have the option of monthly or yearly earning billing." />
             <div class="flex flex-col lg:flex-row gap-3 lg:gap-5 mt-8 min-h-48">
               <Plan 
-                :iconLink="'/images/icon-arcade.svg'"
+                :iconLink="'/multi-step-form/images/icon-arcade.svg'"
                 :name="'Arcade'"
                 :billing="billing"
                 :price="9"
@@ -75,7 +75,7 @@
 
               />
               <Plan 
-                :iconLink="'/images/icon-advanced.svg'"
+                :iconLink="'/multi-step-form/images/icon-advanced.svg'"
                 :name="'Advanced'"
                 :billing="billing"
                 :price="12"
@@ -85,7 +85,7 @@
 
               />
               <Plan 
-                :iconLink="'/images/icon-pro.svg'"
+                :iconLink="'/multi-step-form/images/icon-pro.svg'"
                 :name="'Pro'"
                 :billing="billing"
                 :price="15"
