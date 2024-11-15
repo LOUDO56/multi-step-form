@@ -4,9 +4,9 @@
         <div class="w-[2.7rem] mt-1">
             <img :src="iconLink" :alt="`Icon of ${name}`" class="w-full">
         </div>
-        <div class="text-left lg:text-right">
-            <p class="font-bold text-marine-blue text-lg">{{ name }}</p>
-            <p class="text-cool-gray">{{ montlyOrYearly(price) }}</p>
+        <div class="text-left">
+            <p class="font-bold text-marine-blue text-base lg:text-lg">{{ name }}</p>
+            <p class="text-cool-gray text-sm lg:text-base">{{ montlyOrYearly(price) }}</p>
             <p class="text-marine-blue text-sm lg:mt-0 mt-0.5" v-if="billing === 'yearly'">2 months free</p>
         </div>
     </button>

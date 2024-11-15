@@ -1,6 +1,6 @@
 <template>
 
-  <div class="flex justify-center items-center w-screen h-screen overflow-hidden">
+  <div class="flex justify-center items-center w-screen h-screen">
     <div class="self-start block lg:hidden w-full relative">
       <img src="/images/bg-sidebar-mobile.svg" alt="side bar mobile" class="absolute w-full lg:hidden block -z-10">
       <div class=" flex flex-row justify-center items-center gap-5 my-7">
@@ -10,7 +10,7 @@
         <Step :stepCount="4" description="Summary" :isActive="currentStep >= 4 " />
       </div>
     </div>
-    <div class="rounded-xl bg-white flex gap-10 p-4 m-3 absolute top-24 shadow-lg">
+    <div class="rounded-xl bg-white flex gap-10 p-4 m-3 absolute top-24 shadow-lg w-11/12 lg:w-auto">
       <div class="rounded-xl relative hidden lg:block">
         <img src="/images/bg-sidebar-desktop.svg" alt="side bar desktop" class="w-[18.9rem] lg:block hidden">
         <div class="absolute top-10 left-10 flex flex-col gap-7">
@@ -22,7 +22,7 @@
       </div>
       <!-- First Step -->
 
-      <div class="w-full lg:w-[42rem] px-5 lg:px-20">
+      <div class="w-full lg:w-[42rem] px-2 lg:px-20">
         <div class="flex flex-col h-full" v-if="currentStep === 1">
           <div class="mt-5 lg:mt-10">
             <StepDesc title="Personal info" subtitle="Please provide your name, email address, and phone number." />
@@ -96,11 +96,11 @@
               />
             </div>
             <div class="flex gap-7 items-center justify-center bg-magnolia py-4 mt-8 rounded-md">
-              <p :class="`font-bold ${billing === 'monthly' ? 'text-marine-blue' : 'text-cool-gray'}`">Monthly</p>
+              <p :class="`font-bold text-sm lg:text-base ${billing === 'monthly' ? 'text-marine-blue' : 'text-cool-gray'}`">Monthly</p>
               <button @click="changeBilling" class="w-10 h-5 bg-marine-blue rounded-xl p-1 flex items-center relative">
                 <div :class="`w-3 h-3 rounded-full bg-white absolute ${billing === 'monthly' ? 'left-1' : 'translate-x-5'} transition duration-50 ease-out`"></div>
               </button>
-              <p :class="`font-bold ${billing === 'yearly' ? 'text-marine-blue' : 'text-cool-gray'}`">Yearly</p>
+              <p :class="`font-bold text-sm lg:text-base ${billing === 'yearly' ? 'text-marine-blue' : 'text-cool-gray'}`">Yearly</p>
             </div>
           </div>
           <div class="flex justify-between mt-auto mb-5">
@@ -159,30 +159,30 @@
               <div class="flex justify-between items-center">
                 <div class="flex flex-col">
                   <span class="text-marine-blue font-bold">{{ planSelected.name }} {{ billing === 'monthly' ? '(Monthly)' : '(Yearly)' }}</span>
-                  <button @click="() => currentStep = 2" class="text-cool-gray underline hover:text-purplish-blue transition duration-200 text-left">Change</button>
+                  <button @click="() => currentStep = 2" class="text-cool-gray underline hover:text-purplish-blue transition duration-200 text-left text-sm lg:text-base">Change</button>
                 </div>
                 <span class="font-bold text-marine-blue">{{ montlyOrYearly(planSelected.price) }}</span>
               </div>
               <hr class="my-5">
               <div class="flex flex-col gap-5">
                 <div class="flex justify-between items-center" v-if="isOnlineServiceSelected">
-                  <span class="text-cool-gray">Online Service</span>
+                  <span class="text-cool-gray text-sm lg:text-base">Online Service</span>
                   <span class="text-marine-blue">+{{ montlyOrYearly(1) }}</span>
                 </div>
                 <div class="flex justify-between items-center"  v-if="isLargerStorageSelected">
-                  <span class="text-cool-gray">Larger storage</span>
+                  <span class="text-cool-gray text-sm lg:text-base">Larger storage</span>
                   <span class="text-marine-blue">+{{ montlyOrYearly(2) }}</span>
                 </div>
                 <div class="flex justify-between items-center"  v-if="isCustomProfileSelected">
-                  <span class="text-cool-gray">Customizable profile</span>
+                  <span class="text-cool-gray text-sm lg:text-base">Customizable profile</span>
                   <span class="text-marine-blue">+{{ montlyOrYearly(2) }}</span>
                 </div>
               </div>
             </div>
           </div>
           <div class="mt-5 flex justify-between items-center px-5 lg:px-0">
-            <span class="text-cool-gray">Total {{ billing === 'monthly' ? '(per month)' : '(per year)' }}</span>
-            <span class="text-purplish-blue font-bold text-xl">+${{ billing === 'monthly' ? totalPrice + '/mo' : totalPrice + '/yr' }}</span>
+            <span class="text-cool-gray text-sm lg:text-base">Total {{ billing === 'monthly' ? '(per month)' : '(per year)' }}</span>
+            <span class="text-purplish-blue font-bold text-lg lg:text-xl">+${{ billing === 'monthly' ? totalPrice + '/mo' : totalPrice + '/yr' }}</span>
           </div>
           <div class="flex justify-between mt-auto mb-5">
             <GoBackButton @previousStep="previousStep" :customStyle="'hidden lg:block'" />
@@ -198,7 +198,7 @@
         </div>
       </div>
     </div>
-    <div class="absolute bottom-0 w-full bg-white py-3 px-4 block lg:hidden" v-if="currentStep < 5">
+    <div class="fixed bottom-0 w-full bg-white py-3 px-4 block lg:hidden" v-if="currentStep < 5">
       <div class="flex justify-between items-center">
         <GoBackButton @previousStep="previousStep" v-if="currentStep > 1" />
         <div class="ml-auto">
